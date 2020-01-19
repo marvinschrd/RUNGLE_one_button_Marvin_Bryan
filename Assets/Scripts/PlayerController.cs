@@ -6,8 +6,10 @@ public class PlayerController : MonoBehaviour
 {
     Rigidbody2D body;
     Vector2 direction;
+    [SerializeField]Animator anim;
     int jumps = 2;
     bool isJumping = false;
+    bool isGrounded = false;
     [SerializeField]float speed;
     [SerializeField]float jumpHeight;
     void Start()
@@ -23,11 +25,16 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         direction = new Vector2(speed, body.velocity.y);
-        JumpCheck();
-        if (body.velocity.y < -0.1f&&!isJumping)
+        if (body.velocity.y < -0.1f)
         {
+            anim.SetBool("isJumping", false);
             direction = new Vector2(body.velocity.x, body.velocity.y * 1.1f);
         }
+        //if (isGrounded)
+        //{
+        //    anim.SetBool("isJumping", false);
+        //}
+        JumpCheck();
     }
     void JumpCheck()
     {
@@ -36,6 +43,7 @@ public class PlayerController : MonoBehaviour
             direction = new Vector2(body.velocity.x, jumpHeight);
             jumps -= 1;
             isJumping = true;
+            anim.SetBool("isJumping", true);
         }
         if (Input.GetKeyUp("space"))
         {
@@ -47,6 +55,11 @@ public class PlayerController : MonoBehaviour
         if(collision.gameObject.tag == "ground")
         {
             jumps = 2;
+            isGrounded = true;
         }
     }
+    //private void OnTriggerExit2D(Collider2D collision)
+    //{
+    //    isGrounded = false;
+    //}
 }
