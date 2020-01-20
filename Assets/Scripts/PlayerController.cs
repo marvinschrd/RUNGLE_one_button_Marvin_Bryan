@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D body;
     Vector2 direction;
     [SerializeField]Animator anim;
+    SpriteRenderer sprite;
     int jumps = 2;
     bool isJumping = false;
     bool isGrounded = false;
@@ -14,7 +15,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]float jumpHeight;
     void Start()
     {
+        Time.timeScale = 1f;
         body = GetComponent<Rigidbody2D>();
+        sprite = GetComponent<SpriteRenderer>();
     }
 
     void FixedUpdate()
@@ -52,6 +55,11 @@ public class PlayerController : MonoBehaviour
             isJumping = false;
         }
     }
+
+    void collisionWalckBack()
+    {
+
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "ground")
@@ -63,5 +71,14 @@ public class PlayerController : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         isGrounded = false;
+    }
+
+   public void killPlayer()
+    {
+        Time.timeScale = 0f;
+    }
+    void OnBecameInvisible()
+    {
+        Destroy(gameObject);
     }
 }
