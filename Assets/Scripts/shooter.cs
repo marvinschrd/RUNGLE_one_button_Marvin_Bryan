@@ -33,43 +33,42 @@ public class shooter : MonoBehaviour
             case State.IDLE:
                 break;
             case State.WARNING:
-                warning.enabled = true;
-                warningTimer -= Time.deltaTime;
-                if (warningTimer <= 0)
+                shootTimer -= Time.deltaTime;
+                if (shootTimer <= 0)
                 {
-                    warning.enabled = false;
-                    state = State.SHOOT;
-                    canShoot = true;
+                    warning.enabled = true;
+                    warningTimer -= Time.deltaTime;
+                    if (warningTimer <= 0)
+                    {
+                        warning.enabled = false;
+                        state = State.SHOOT;
+                        canShoot = true;
+                    }
                 }
                 break;
             case State.SHOOT:
                 if (canShoot)
                 {
-                    shootTimer -= Time.deltaTime;
-                    if (shootTimer <= 0)
-                    {
                         GameObject arrow = Instantiate(prefabArrow, arrowSpawnPoint);
                         arrow.GetComponent<Rigidbody2D>().velocity = Vector2.left * arrowSpeed;
                         canShoot = false;
-                    }
                 }
                 break;
         }
-        shoot();
     }
-    void shoot()
-    {
-        if (canShoot)
-        {
-            shootTimer -= Time.deltaTime;
-            if (shootTimer <= 0)
-            { 
-                GameObject arrow = Instantiate(prefabArrow, arrowSpawnPoint);
-                arrow.GetComponent<Rigidbody2D>().velocity = Vector2.left * arrowSpeed;
-                canShoot = false;
-            }
-        }
-    }
+    //void shoot()
+    //{
+    //    if (canShoot)
+    //    {
+    //        shootTimer -= Time.deltaTime;
+    //        if (shootTimer <= 0)
+    //        { 
+    //            GameObject arrow = Instantiate(prefabArrow, arrowSpawnPoint);
+    //            arrow.GetComponent<Rigidbody2D>().velocity = Vector2.left * arrowSpeed;
+    //            canShoot = false;
+    //        }
+    //    }
+    //}
     private void OnBecameVisible()
     {
         state = State.WARNING;
