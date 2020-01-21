@@ -1,18 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
     Rigidbody2D body;
     Vector2 direction;
-    [SerializeField]Animator anim;
+    [SerializeField] Animator anim;
     SpriteRenderer sprite;
     int jumps = 2;
     bool isJumping = false;
     bool isGrounded = false;
-    [SerializeField]float speed;
-    [SerializeField]float jumpHeight;
+    [SerializeField] float speed;
+    [SerializeField] float jumpHeight;
+    [SerializeField] GameObject deadMenu;
+
     void Start()
     {
         Time.timeScale = 1f;
@@ -24,32 +27,37 @@ public class PlayerController : MonoBehaviour
     {
         body.velocity = direction;
     }
+
     // Update is called once per frame
     void Update()
     {
         direction = new Vector2(speed, body.velocity.y);
-        if (body.velocity.y < -0.1f&&!isGrounded)
+        if (body.velocity.y < -0.1f && !isGrounded)
         {
             anim.SetBool("isJumping", false);
             anim.SetBool("midAir", true);
             direction = new Vector2(body.velocity.x, body.velocity.y * 1.1f);
         }
+
         if (isGrounded)
         {
             anim.SetBool("midAir", false);
         }
+
         JumpCheck();
     }
+
     void JumpCheck()
     {
-        if(Input.GetKeyDown("space")&& jumps >0)
+        if (Input.GetKeyDown("space") && jumps > 0)
         {
             direction = new Vector2(body.velocity.x, jumpHeight);
             jumps -= 1;
             isJumping = true;
             anim.SetBool("isJumping", true);
-           
+
         }
+
         //if (Input.GetKeyUp("space"))
         //{
         //    isJumping = false;
@@ -60,6 +68,7 @@ public class PlayerController : MonoBehaviour
     {
 
     }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "ground")
@@ -68,17 +77,25 @@ public class PlayerController : MonoBehaviour
             isGrounded = true;
         }
     }
+
     private void OnTriggerExit2D(Collider2D collision)
     {
         isGrounded = false;
     }
 
-   public void killPlayer()
+    public void killPlayer()
     {
         Time.timeScale = 0f;
+        deadMenu.SetActive(true);
     }
-    void OnBecameInvisible()
+    
+
+    public void Restart()
     {
-        Destroy(gameObject);
+        SceneManager.LoadScene("SampleScene");
+        deadMenu.SetActive(false);
+        Score.score = 0;
+
     }
+    
 }

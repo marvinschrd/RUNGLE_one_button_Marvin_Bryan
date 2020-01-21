@@ -14,7 +14,7 @@ public class Score : MonoBehaviour
     }
     void Update()
     {
-        scoreText.text = score.ToString("F1");
+        scoreText.text = score.ToString();
     }
   
 }
