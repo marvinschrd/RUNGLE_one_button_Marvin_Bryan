@@ -50,10 +50,10 @@ public class PlayerController : MonoBehaviour
             anim.SetBool("isJumping", true);
            
         }
-        if (Input.GetKeyUp("space"))
-        {
-            isJumping = false;
-        }
+        //if (Input.GetKeyUp("space"))
+        //{
+        //    isJumping = false;
+        //}
     }
 
     void collisionWalckBack()

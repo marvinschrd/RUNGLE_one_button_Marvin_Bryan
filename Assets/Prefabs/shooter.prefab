@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2006825324}
   m_LocalRotation: {x: -0, y: -0, z: 0.065123804, w: 0.9978772}
-  m_LocalPosition: {x: -0.81, y: 1.52, z: 0}
+  m_LocalPosition: {x: -2.06, y: 1.52, z: 0}
   m_LocalScale: {x: 1.4260204, y: 1.42602, z: 1.42602}
   m_Children: []
   m_Father: {fileID: 204792328289991465}
@@ -198,6 +198,6 @@ MonoBehaviour:
     type: 3}
   arrowSpawnPoint: {fileID: 204792328289991465}
   arrowSpeed: 10
-  shootTimer: 0.5
+  shootTimer: 1.4
   warningTimer: 0.5
   warning: {fileID: 2006825325}
