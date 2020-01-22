@@ -32,18 +32,17 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         direction = new Vector2(speed, body.velocity.y);
-        if (body.velocity.y < -0.1f && !isGrounded)
-        {
-            anim.SetBool("isJumping", false);
-            anim.SetBool("midAir", true);
-            direction = new Vector2(body.velocity.x, body.velocity.y * 1.1f);
-        }
-
-        if (isGrounded)
-        {
-            anim.SetBool("midAir", false);
-        }
-
+        jumpAnim();
+        //if (body.velocity.y < -0.1f && !isGrounded)
+        //{
+        //    anim.SetBool("isJumping", false);
+        //    anim.SetBool("midAir", true);
+        //    direction = new Vector2(body.velocity.x, body.velocity.y * 1.1f);
+        //}
+        //if (isGrounded)
+        //{
+        //    anim.SetBool("midAir", false);
+        //}
         JumpCheck();
     }
 
@@ -53,20 +52,23 @@ public class PlayerController : MonoBehaviour
         {
             direction = new Vector2(body.velocity.x, jumpHeight);
             jumps -= 1;
-            isJumping = true;
             anim.SetBool("isJumping", true);
 
         }
-
-        //if (Input.GetKeyUp("space"))
-        //{
-        //    isJumping = false;
-        //}
     }
 
-    void collisionWalckBack()
+    void jumpAnim()
     {
-
+        if (body.velocity.y < -0.1f)
+        {
+            anim.SetBool("isJumping", false);
+            anim.SetBool("midAir", true);
+            direction = new Vector2(body.velocity.x, body.velocity.y * 1.1f);
+        }
+        if (isGrounded)
+        {
+            anim.SetBool("midAir", false);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -97,5 +99,12 @@ public class PlayerController : MonoBehaviour
         Score.score = 0;
 
     }
-    
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.tag == "win")
+        {
+
+        }
+    }
 }
