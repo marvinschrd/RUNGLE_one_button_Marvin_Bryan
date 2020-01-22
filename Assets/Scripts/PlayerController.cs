@@ -10,17 +10,19 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Animator anim;
     SpriteRenderer sprite;
     int jumps = 2;
-    bool isJumping = false;
     bool isGrounded = false;
-    [SerializeField] float speed;
+    bool isDead = false;
+    [SerializeField] float speed = 5;
     [SerializeField] float jumpHeight;
     [SerializeField] GameObject deadMenu;
+    [SerializeField] GameObject WinPanel;
 
     void Start()
     {
         Time.timeScale = 1f;
         body = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
+        isDead = false;
     }
 
     void FixedUpdate()
@@ -33,27 +35,20 @@ public class PlayerController : MonoBehaviour
     {
         direction = new Vector2(speed, body.velocity.y);
         jumpAnim();
-        //if (body.velocity.y < -0.1f && !isGrounded)
-        //{
-        //    anim.SetBool("isJumping", false);
-        //    anim.SetBool("midAir", true);
-        //    direction = new Vector2(body.velocity.x, body.velocity.y * 1.1f);
-        //}
-        //if (isGrounded)
-        //{
-        //    anim.SetBool("midAir", false);
-        //}
         JumpCheck();
+        if(isDead)
+        {
+            loadDeathPanel();
+        }
     }
 
     void JumpCheck()
     {
-        if (Input.GetKeyDown("space") && jumps > 0)
+        if (Input.GetKeyDown("space") && jumps > 0&& !isDead)
         {
             direction = new Vector2(body.velocity.x, jumpHeight);
             jumps -= 1;
             anim.SetBool("isJumping", true);
-
         }
     }
 
@@ -87,24 +82,36 @@ public class PlayerController : MonoBehaviour
 
     public void killPlayer()
     {
+        isDead = true;
+    }
+
+    void loadDeathPanel()
+    {
         Time.timeScale = 0f;
         deadMenu.SetActive(true);
+        if (Input.GetKeyDown("space"))
+        {
+            Restart();
+        }
     }
-    
-
     public void Restart()
     {
         SceneManager.LoadScene("SampleScene");
         deadMenu.SetActive(false);
+        WinPanel.SetActive(false);
         Score.score = 0;
-
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.tag == "win")
         {
-
+            isDead = true;
+            WinPanel.SetActive(true);
+            if (Input.GetKeyDown("space"))
+            {
+                Restart();
+            }
         }
     }
 }
