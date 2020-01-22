@@ -12,14 +12,17 @@ public class PlayerController : MonoBehaviour
     int jumps = 2;
     bool isGrounded = false;
     bool isDead = false;
+    bool gameStarted = false;
     [SerializeField] float speed = 5;
     [SerializeField] float jumpHeight;
     [SerializeField] GameObject deadMenu;
     [SerializeField] GameObject WinPanel;
-
+    [SerializeField] GameObject StartingPanel;
+    [SerializeField] AudioSource coin;
+    [SerializeField] AudioSource jump;
     void Start()
     {
-        Time.timeScale = 1f;
+        Time.timeScale = 0f;
         body = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
         isDead = false;
@@ -27,7 +30,7 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        body.velocity = direction;
+       body.velocity = direction;
     }
 
     // Update is called once per frame
@@ -36,21 +39,26 @@ public class PlayerController : MonoBehaviour
         direction = new Vector2(speed, body.velocity.y);
         jumpAnim();
         JumpCheck();
-        if(isDead)
+        if (isDead)
         {
             loadDeathPanel();
+        }
+        if(!gameStarted)
+        {
+            UnloadStartingPanel();
         }
     }
 
     void JumpCheck()
     {
             Debug.Log(jumps);
-        if (Input.GetKeyDown("space") && jumps > 0 && !isDead)
+        if (Input.GetKeyDown("space") && jumps > 0 && !isDead && gameStarted)
         {
             direction = new Vector2(body.velocity.x, jumpHeight);
             jumps -= 1;
             Debug.Log(jumps);
             anim.SetBool("isJumping", true);
+            jump.Play();
         }
     }
 
@@ -68,12 +76,16 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "ground")
         {
             jumps = 2;
             isGrounded = true;
+        }
+        if (collision.gameObject.tag == "coin")
+        {
+            coin.Play();
         }
     }
 
@@ -99,11 +111,21 @@ public class PlayerController : MonoBehaviour
             Restart();
         }
     }
+    void UnloadStartingPanel()
+    {
+        if (Input.GetKeyDown("space"))
+        {
+            StartingPanel.SetActive(false);
+            Time.timeScale = 1f;
+            gameStarted = true;
+        }
+    }
     public void Restart()
     {
         SceneManager.LoadScene("SampleScene");
         deadMenu.SetActive(false);
         WinPanel.SetActive(false);
+        StartingPanel.SetActive(true);
         Score.score = 0;
     }
 
@@ -115,7 +137,7 @@ public class PlayerController : MonoBehaviour
             WinPanel.SetActive(true);
             if (Input.GetKeyDown("space"))
             {
-                Restart();
+                Application.Quit();
             }
         }
     }

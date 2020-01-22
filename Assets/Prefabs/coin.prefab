@@ -10,12 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 8352756345083228529}
   - component: {fileID: 5993271231797245685}
-  - component: {fileID: 6450312696391497600}
+  - component: {fileID: 4367854192876112745}
   - component: {fileID: 7963581494610636822}
   - component: {fileID: 1756416239}
   m_Layer: 0
   m_Name: coin
-  m_TagString: Untagged
+  m_TagString: coin
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 8333800059696755191}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.35, y: 0.63, z: 0}
-  m_LocalScale: {x: 1.2968512, y: 1.1995873, z: 1.2968512}
+  m_LocalScale: {x: 1.0518512, y: 0.9729623, z: 1.0518512}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -84,7 +84,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &6450312696391497600
+--- !u!114 &4367854192876112745
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -109,7 +109,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.0018460676, y: -0.006187141}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -120,7 +120,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.40894115, y: 0.42693257}
   m_EdgeRadius: 0
 --- !u!95 &1756416239
 Animator:
