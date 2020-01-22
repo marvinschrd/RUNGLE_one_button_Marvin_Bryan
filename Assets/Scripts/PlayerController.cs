@@ -44,17 +44,19 @@ public class PlayerController : MonoBehaviour
 
     void JumpCheck()
     {
-        if (Input.GetKeyDown("space") && jumps > 0&& !isDead)
+            Debug.Log(jumps);
+        if (Input.GetKeyDown("space") && jumps > 0 && !isDead)
         {
             direction = new Vector2(body.velocity.x, jumpHeight);
             jumps -= 1;
+            Debug.Log(jumps);
             anim.SetBool("isJumping", true);
         }
     }
 
     void jumpAnim()
     {
-        if (body.velocity.y < -0.1f)
+        if (body.velocity.y < -0.5f)
         {
             anim.SetBool("isJumping", false);
             anim.SetBool("midAir", true);
@@ -66,7 +68,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "ground")
         {
@@ -77,7 +79,10 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        isGrounded = false;
+        if (collision.gameObject.tag != "Player")
+        {
+            isGrounded = false;
+        }
     }
 
     public void killPlayer()
