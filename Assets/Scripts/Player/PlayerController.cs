@@ -27,13 +27,10 @@ public class PlayerController : MonoBehaviour
         sprite = GetComponent<SpriteRenderer>();
         isDead = false;
     }
-
     void FixedUpdate()
     {
        body.velocity = direction;
     }
-
-    // Update is called once per frame
     void Update()
     {
         direction = new Vector2(speed, body.velocity.y);
@@ -48,7 +45,6 @@ public class PlayerController : MonoBehaviour
             UnloadStartingPanel();
         }
     }
-
     void JumpCheck()
     {
             Debug.Log(jumps);
@@ -61,7 +57,6 @@ public class PlayerController : MonoBehaviour
             jump.Play();
         }
     }
-
     void jumpAnim()
     {
         if (body.velocity.y < -0.5f)
@@ -75,7 +70,6 @@ public class PlayerController : MonoBehaviour
             anim.SetBool("midAir", false);
         }
     }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "ground")
@@ -88,7 +82,6 @@ public class PlayerController : MonoBehaviour
             coin.Play();
         }
     }
-
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.tag != "Player")
@@ -96,7 +89,6 @@ public class PlayerController : MonoBehaviour
             isGrounded = false;
         }
     }
-
     public void killPlayer()
     {
         isDead = true;
@@ -128,7 +120,6 @@ public class PlayerController : MonoBehaviour
         StartingPanel.SetActive(true);
         Score.score = 0;
     }
-
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.tag == "win")

@@ -6,7 +6,6 @@ public class shooter : MonoBehaviour
 {
     [SerializeField] GameObject prefabArrow;
     [SerializeField] Transform arrowSpawnPoint;
-    //[SerializeField] AudioSource arrowSound;
     [SerializeField] float arrowSpeed = 10;
     [SerializeField] float shootTimer = 0f;
     [SerializeField] float warningTimer = 0f;
@@ -19,13 +18,6 @@ public class shooter : MonoBehaviour
         SHOOT,
     }
     State state = State.IDLE;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
         switch(state)
@@ -56,19 +48,6 @@ public class shooter : MonoBehaviour
                 break;
         }
     }
-    //void shoot()
-    //{
-    //    if (canShoot)
-    //    {
-    //        shootTimer -= Time.deltaTime;
-    //        if (shootTimer <= 0)
-    //        { 
-    //            GameObject arrow = Instantiate(prefabArrow, arrowSpawnPoint);
-    //            arrow.GetComponent<Rigidbody2D>().velocity = Vector2.left * arrowSpeed;
-    //            canShoot = false;
-    //        }
-    //    }
-    //}
     private void OnBecameVisible()
     {
         state = State.WARNING;

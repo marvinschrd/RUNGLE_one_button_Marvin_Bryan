@@ -8,14 +8,11 @@ public class parallaxBackground : MonoBehaviour
     float startPosition;
     [SerializeField] GameObject cam;
     [SerializeField] float parallaxEffect;
-    // Start is called before the first frame update
     void Start()
     {
         startPosition = transform.position.x;
         lenght = GetComponent<SpriteRenderer>().bounds.size.x;
     }
-
-    // Update is called once per frame
     void Update()
     {
         float temp = (cam.transform.position.x * (1 - parallaxEffect));
